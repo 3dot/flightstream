@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="css/app.css" rel="stylesheet"/>
+    <link href="css/fix.css" rel="stylesheet"/>
+    <link href="css/marquee.css" rel="stylesheet" />
+    <link href="css/material-design-iconic-font.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx5DEzMnBg1ZfvXP_OLaDupZzk1--eOJ0">
+    </script>
+</head>
+<body style="display: none;">
+
+    <header id="header" class="clearfix" data-current-skin="darkblue">
+        <ul class="header-inner">
+            <li id="plane_manufacturer">
+                <a href="index.html" id="plane_manufacturer"><img src="img/airbus.png" alt="" style="height: 35px;"></a>
+            </li>
+
+            <li class="pull-left">
+                <ul class="top-menu">
+                    <li class="large">
+                        <span id="plane_type">...</span>
+                    </li>
+                    <li class="large">
+                        <span id="local_time">...</span>
+                    </li>
+                    <li class="medium">
+                        <i class="zmdi zmdi-circle m-r-5"></i> <span id="plane_id">...</span>
+                    </li>
+                    <li class="medium">
+                        <i class="zmdi zmdi-airplane m-r-5"></i> <span id="flight_id">...</span>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="pull-right m-l-10">
+                <ul class="top-menu active">
+                    <li>
+                        <span id="flight_distance_remaining">...</span>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="pull-right">
+                <ul class="top-menu">
+                    <li>
+                        <span id="flight_departure">...</span>
+                    </li>
+                    <li>
+                        <div id="flightProgress" class="progress progress-striped active" style="width: 200px; height: 10px; margin-top: 13px; background-color: #F44336;">
+                            <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span id="flight_destination">...</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+
+    <section id="main">
+        <div class="pull-right" id="mapDataSupplement">
+            <div class="card blog-post z-depth-2 m-b-20">
+                <div class="bp-header">
+                    <div id="map"></div>
+                    <div id="map_data" class="bgm-indigo row p-10">
+                        <div class="col-sm-6 p-0">
+                            <i class="fa fa-plane m-r-5"></i> <span id="flight_altitude">...</span>
+                        </div>
+                        <div class="col-sm-6 text-right p-0">
+                            <i class="fa fa-tachometer m-r-5"></i> <span id="flight_speed">...</span>
+                        </div>
+                    </div>
+                    <div class="bgm-gray p-10 text-center f-16 text-uppercase overflow-hidden">
+                        <div id="notification_gears">Gears down</div>
+                        <div id="notification_route" class="marquee">...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pull-left card text-uppercase mainmessage p-10" id="generalMessage">
+            <i class="fa fa-comment m-r-5"></i><span></span>
+        </div>
+    </section>
+
+</body>
+</html>

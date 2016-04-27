@@ -1,0 +1,17 @@
+{
+  "name": "flightstream",
+  "version": "0.0.1",
+  "nodecgDependency": ">=0.5.0",
+  "homepage": "http://3dot.net/",
+  "authors": [
+    "Miran Hojnik <miran@3dot.net>"
+  ],
+  "description": "FSX & P3D bundle",
+  "resolutions": [
+    "1800p", "720p"
+  ],
+  "extension": {
+    "path": "extension.js"
+  },
+  "license": "MIT"
+}

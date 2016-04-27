@@ -1,0 +1,78 @@
+[data-current-skin="darkblue"] {
+    background-color: #0A1523;
+}
+
+body {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+#header {
+	min-height: 82px;
+	padding: 0 15px;
+}
+
+.header-inner {
+	padding: 24px 0;
+}
+
+.top-menu > li {
+	border-radius: 3px;
+	color: #fff;
+	line-height: 35px;
+    white-space: nowrap;
+    padding: 0 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.top-menu.active > li {
+	background-color: rgba(255, 255, 255, 0.12);
+}
+
+.top-menu > li.large {
+	font-size: 26px;
+}
+
+.top-menu > li.medium {
+	font-size: 18px;
+}
+
+#main {
+	background: transparent;
+	padding-left: 15px;
+	padding-right: 15px;
+	/*padding: 90px 15px 30px 25px;*/
+}
+
+#main .card.mainmessage {
+	color: #fff;
+	font-weight: bold;
+	font-size: 16px;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+#map {
+	width: 100%;
+	height: 250px;
+}
+#mapDataSupplement {
+	overflow: hidden;
+	color: #fff;
+	font-size: 16px;
+	width: 330px;
+	padding: 15px;
+}
+
+#mapDataSupplement .row {
+	margin: 0;
+}
+
+/* google maps link hiding */
+#map .gm-style-cc {
+	display: none;
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}

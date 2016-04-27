@@ -1,0 +1,28 @@
+{
+  "name": "flightstream",
+  "nodecg": {
+    "compatibleRange": "~0.7.0",
+    "dashboardPanels": [
+      {
+        "name": "fspanel",
+        "title": "FlightStream",
+        "width": 4,
+        "headerColor": "#2d4e8a",
+        "file": "panel.html"
+      }
+    ],
+    "graphics": [
+      {
+        "file": "index.html",
+        "width": 1280,
+        "height": 720,
+        "singleInstance": false
+      }
+    ]
+  },
+  "dependencies": {
+    "async": ">=2.0.0-rc.3",
+    "lodash": "4.x",
+    "websocket": "1.x"
+  }
+}

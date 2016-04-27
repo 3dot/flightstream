@@ -1,0 +1,29 @@
+.marquee {
+  padding: 0 10px;
+  text-align: left;
+  white-space: nowrap;
+  position: relative;
+  transform: translateX(-50%);
+  display: inline-block;
+  left: 50%;
+  animation: linear infinite;
+}
+@keyframes movement-smooth {
+  from {
+    transform: translateX(0%);
+    left: 100%;
+  }
+  to {
+    transform: translateX(-100%);
+    left: 0%;
+  }
+}
+.marquee {
+  animation-duration: 60s;
+}
+.marquee {
+  animation-name: movement-smooth;
+}
+.marquee {
+  animation-direction: normal;
+}

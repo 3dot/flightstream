@@ -1,0 +1,6 @@
+{
+	"wscDir": "/WebSimConnect",
+	"wscHost": "localhost",
+	"wscHTTP": 8080,
+	"wscWS": 8088
+}
