@@ -320,6 +320,7 @@ module.exports = function (nodecg) {
     };
 
     callsign.on('change', function (oldValue, newValue) {
+        if (_.isUndefined(newValue)) return;
         if (newValue === '') return;
         nodecg.log.info('>>', 'callsign.on.change', 'fetch', newValue);
         async.retry({ times: 5, interval: (2 * 60 * 1000) }, function (next, result) {
