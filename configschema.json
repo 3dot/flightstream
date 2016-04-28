@@ -1,6 +1,31 @@
 {
-	"wscDir": "/WebSimConnect",
-	"wscHost": "localhost",
-	"wscHTTP": 8080,
-	"wscWS": 8088
+	"type": "object",
+	"properties": {
+		"dir": {
+			"description": "WebSimConnect directory relative to the NodeCG root",
+			"type": "string",
+			"default": "./WebSimConnect"
+		},
+		"host": {
+			"description": "WebSimConnect default hostname",
+			"type": "string",
+			"default": "localhost"
+		},
+		"http": {
+			"description": "WebSimConnect default HTTP port",
+			"type": "integer",
+			"default": 8080
+		},
+		"ws": {
+			"description": "WebSimConnect default WebSocket port",
+			"type": "integer",
+			"default": 8088
+		},
+		"init": {
+			"description": "True if NodeCG should spawn the WebSimConnect process",
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"required": ["dir", "host", "http", "ws", "init"]
 }

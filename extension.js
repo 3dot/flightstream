@@ -51,15 +51,14 @@ function IsJsonString(str) {
 module.exports = function (nodecg) {
     conf = {
         websimconnect: {
-            dir: nodecg.bundleConfig.wscDir || '\WebSimConnect',
-            host: nodecg.bundleConfig.wscHost || "localhost",
-            http: nodecg.bundleConfig.wscHTTP || 8080,
-            ws: nodecg.bundleConfig.wscWS || 8088
+            dir: nodecg.bundleConfig.dir || './WebSimConnect',
+            host: nodecg.bundleConfig.host || "localhost",
+            http: nodecg.bundleConfig.http || 8080,
+            ws: nodecg.bundleConfig.ws || 8088
         },
         definition: 'nodecgoverlay',
-        init: false,
-        ws: null,
-        log: true
+        init: nodecg.bundleConfig.init || false,
+        ws: null
     };
 
     var flightRoute = nodecg.Replicant('route');
@@ -308,15 +307,22 @@ module.exports = function (nodecg) {
     var startup = function () {
         nodecg.log.info('>>', 'Starting FlightStream');
 
-        if (_.isUndefined(conf.websimconnect.http)) return nodecg.log.error('Websimconnect configuration error, missing HTTP port');
-        if (_.isUndefined(conf.websimconnect.ws)) return nodecg.log.error('Websimconnect configuration error, missing WS port');
-        if (_.isUndefined(conf.websimconnect.dir)) return nodecg.log.error('Websimconnect configuration error, missing executable directory');
+        if (conf.init) {
+            if (_.isUndefined(conf.websimconnect.http)) return nodecg.log.error('Websimconnect configuration error, missing HTTP port');
+            if (_.isUndefined(conf.websimconnect.ws)) return nodecg.log.error('Websimconnect configuration error, missing WS port');
+            if (_.isUndefined(conf.websimconnect.dir)) return nodecg.log.error('Websimconnect configuration error, missing executable directory');
 
-        exec.exec("WebSimConnect.exe", ["-port=" + conf.websimconnect.http, "-websocketport=" + conf.websimconnect.ws, "-start"], conf.websimconnect.dir, null, function (error, stdout, stderr) {
-            if (error) return nodecg.log.error(error);
-            nodecg.log.info('WebSimConnect spawned');
+            nodecg.log.info('WebSimConnect startup');
+
+            exec.exec("WebSimConnect.exe", ["-port=" + conf.websimconnect.http, "-websocketport=" + conf.websimconnect.ws, "-start"], conf.websimconnect.dir, null, function (error, stdout, stderr) {
+                if (error) return nodecg.log.error(error);
+                nodecg.log.info('WebSimConnect spawned');
+                getData();
+            });
+        } else {
+            nodecg.log.info('Assumin WebSimConnect has already spawned');
             getData();
-        });
+        }
     };
 
     callsign.on('change', function (oldValue, newValue) {
