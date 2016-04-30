@@ -65,7 +65,7 @@ $(function() {
 		            return '<img src="img/bombardier.png" alt="" style="height: 35px;">';
 		            break;
 		        default:
-		            return airline;
+		            return '<img src="img/' + airline.toLowerCase() + '.png" alt="" style="height: 35px;">';
 		            break;
 		    }
 		}

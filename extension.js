@@ -172,35 +172,33 @@ module.exports = function (nodecg) {
     };
 
     var getData = function () {
-        if (!conf.init) {
-            var commands = [
-				'clear_definition?name=def&',
-				'add_definition?name=localtime&PropertyName=Local time&UnitName=Seconds&DatumType=INT32',
-				'add_definition?name=lat&PropertyName=Plane Latitude&UnitName=degrees&DatumType=FLOAT32',
-				'add_definition?name=lon&PropertyName=Plane Longitude&UnitName=degrees&DatumType=FLOAT32',
-				'add_definition?name=altitude&PropertyName=Plane Altitude&UnitName=feet&DatumType=FLOAT32',
-				'add_definition?name=heading&PropertyName=PLANE HEADING DEGREES TRUE&UnitName=degrees&DatumType=FLOAT32',
-				'add_definition?name=speed&PropertyName=GROUND VELOCITY&UnitName=knots&DatumType=FLOAT32',
-				'add_definition?name=atc_type&PropertyName=ATC TYPE&DatumType=STRING256',
-				'add_definition?name=atc_model&PropertyName=ATC MODEL&DatumType=STRING256',
-				'add_definition?name=atc_id&PropertyName=ATC ID&DatumType=STRING256',
-				'add_definition?name=atc_airline&PropertyName=ATC AIRLINE&DatumType=STRING256',
-				'add_definition?name=gears&PropertyName=GEAR HANDLE POSITION&UnitName=Bool&DatumType=INT32',
-				'add_definition?name=autopilot&PropertyName=AUTOPILOT MASTER&UnitName=Bool&DatumType=INT32',
-				'add_message?name=SIMCONNECT_RECV_ID_SIMOBJECT_DATA',
-				'start_interval?period=SIMCONNECT_PERIOD_VISUAL_FRAME&interval=100'
-            ];
+        var commands = [
+			'clear_definition?name=def&',
+			'add_definition?name=localtime&PropertyName=Local time&UnitName=Seconds&DatumType=INT32',
+			'add_definition?name=lat&PropertyName=Plane Latitude&UnitName=degrees&DatumType=FLOAT32',
+			'add_definition?name=lon&PropertyName=Plane Longitude&UnitName=degrees&DatumType=FLOAT32',
+			'add_definition?name=altitude&PropertyName=Plane Altitude&UnitName=feet&DatumType=FLOAT32',
+			'add_definition?name=heading&PropertyName=PLANE HEADING DEGREES TRUE&UnitName=degrees&DatumType=FLOAT32',
+			'add_definition?name=speed&PropertyName=GROUND VELOCITY&UnitName=knots&DatumType=FLOAT32',
+			'add_definition?name=atc_type&PropertyName=ATC TYPE&DatumType=STRING256',
+			'add_definition?name=atc_model&PropertyName=ATC MODEL&DatumType=STRING256',
+			'add_definition?name=atc_id&PropertyName=ATC ID&DatumType=STRING256',
+			'add_definition?name=atc_airline&PropertyName=ATC AIRLINE&DatumType=STRING256',
+			'add_definition?name=gears&PropertyName=GEAR HANDLE POSITION&UnitName=Bool&DatumType=INT32',
+			'add_definition?name=autopilot&PropertyName=AUTOPILOT MASTER&UnitName=Bool&DatumType=INT32',
+			'add_message?name=SIMCONNECT_RECV_ID_SIMOBJECT_DATA',
+			'start_interval?period=SIMCONNECT_PERIOD_VISUAL_FRAME&interval=100'
+        ];
 
-            async.eachSeries(commands, function (command, callback) {
-                getJSON(command + '&definition_name=' + conf.definition, callback);
-            },
-			// optional callback
-			function (err, results) {
-			    if (err) return nodecg.log.error('There was an error');
-			    nodecg.log.info('WebSimConnect connected');
-			    getWS();
-			});
-        }
+        async.eachSeries(commands, function (command, callback) {
+            getJSON(command + '&definition_name=' + conf.definition, callback);
+        },
+		// optional callback
+		function (err, results) {
+			if (err) return nodecg.log.error('There was an error');
+			nodecg.log.info('WebSimConnect connected');
+			getWS();
+		});
     };
 
     var getWS = function () {

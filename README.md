@@ -35,4 +35,5 @@ body {
 ```
 
 **Support**
+
 In case of issues, use the issues tab on GitHub or send a message via Twitter (https://twitter.com/bisequeplay)
