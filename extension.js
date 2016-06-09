@@ -349,7 +349,7 @@ module.exports = function (nodecg) {
     flightRoute.on('change', function (oldValue, newValue) {
         async.auto({
             departure: function (cb) {
-                if (newValue.departure === '') return cb(null, false);
+                if (_.get(newValue, 'departure', null) == null) return cb(null, false);
                 if (newValue.departure != flightData.departure.value.code) {
                     getAirportObject(newValue.departure, function (err, res) {
                         if (err) return cb(null, false);
@@ -362,7 +362,7 @@ module.exports = function (nodecg) {
                 }
             },
             destination: function (cb) {
-                if (newValue.destination === '') return cb(null, false);
+                if (_.get(newValue, 'destination', null) == null) return cb(null, false);
                 if (newValue.destination != flightData.destination.value.code) {
                     getAirportObject(newValue.destination, function (err, res) {
                         if (err) return cb(null, false);
