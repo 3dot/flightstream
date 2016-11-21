@@ -1,7 +1,7 @@
 {
   "name": "flightstream",
   "nodecg": {
-    "compatibleRange": "~0.7.0",
+    "compatibleRange": "~0.8",
     "dashboardPanels": [
       {
         "name": "fspanel",

@@ -11,8 +11,20 @@
     <form class="form-horizontal">
         <div class="form-group">
             <label for="fsPilotCallsign" class="col-xs-2 control-label">Callsign</label>
-            <div class="col-xs-10">
+            <div class="col-xs-1">
+                <input type="checkbox" title="VATSIM callsign" id="fsPilotVatsimCheck" value="1">
+            </div>
+            <div class="col-xs-9">
                 <input type="text" class="form-control" id="fsPilotCallsign" placeholder="ADR14X">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="fsPilotCallsign" class="col-xs-2 control-label">Route</label>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" id="fsRouteFixedDeparture" placeholder="LJLJ">
+            </div>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" id="fsRouteFixedDestination" placeholder="EDDF">
             </div>
         </div>
         <div class="form-group">

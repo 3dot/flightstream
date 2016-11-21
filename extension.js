@@ -63,6 +63,7 @@ module.exports = function (nodecg) {
 
     var flightRoute = nodecg.Replicant('route');
     var callsign = nodecg.Replicant('callsign');
+    var fixedroute = nodecg.Replicant('fixedroute');
 
     var flightData = {
         plane: nodecg.Replicant('airplane', {
@@ -255,7 +256,7 @@ module.exports = function (nodecg) {
     };
 
     var processWSMessageThrottled = _.throttle(processWSMessage, 1000, { 'trailing': false });
-    var pushAircraftDataThrottled = _.throttle(pushAircraftData, 60000, { 'trailing': false });
+    var pushAircraftDataThrottled = _.throttle(pushAircraftData, 30000, { 'trailing': false });
 
     var getAirportData = function (airport, cb) {
         request({ url: 'https://h1vag64xz9.execute-api.eu-west-1.amazonaws.com/prod/airports/' + airport }, function (err, res, body) {
@@ -318,35 +319,45 @@ module.exports = function (nodecg) {
                 getData();
             });
         } else {
-            nodecg.log.info('Assumin WebSimConnect has already spawned');
+            nodecg.log.info('Assuming WebSimConnect has already spawned');
             getData();
         }
     };
 
-    callsign.on('change', function (oldValue, newValue) {
-        if (_.isUndefined(newValue)) return;
-        if (newValue === '') return;
-        nodecg.log.info('>>', 'callsign.on.change', 'fetch', newValue);
-        async.retry({ times: 5, interval: (2 * 60 * 1000) }, function (next, result) {
-            fetchVatsimData(newValue, function (err, res) {
-                if (err) return next(err);
-                if (res === null) return next('Not found');
-                next(null, res);
+    fixedroute.on('change', function(newValue, oldValue) {
+        console.log('>>1', oldValue);
+        console.log('>>2', newValue);
+        if (!newValue) return;
+        if (newValue.vatsim) {
+            nodecg.log.info('>>', 'callsign.on.change', 'fetch', callsign.value);
+            async.retry({ times: 5, interval: (2 * 60 * 1000) }, function (next, result) {
+                fetchVatsimData(callsign.value, function (err, res) {
+                    if (err) return next(err);
+                    if (res === null) return next('Not found');
+                    next(null, res);
+                });
+            }, function (err, result) {
+                if (err) return nodecg.log.error(err);
+                flightRoute.value = {
+                    departure: result.origin,
+                    destination: result.destination,
+                    plan: {
+                        route: result.route,
+                        cruise: result.planned_altitude
+                    }
+                };
             });
-        }, function (err, result) {
-            if (err) return nodecg.log.error(err);
+        } else {
+            nodecg.log.info('>>', 'fixedroute.on.change', 'fetch', newValue);
             flightRoute.value = {
-                departure: result.origin,
-                destination: result.destination,
-                plan: {
-                    route: result.route,
-                    cruise: result.planned_altitude
-                }
+                departure: newValue.departure,
+                destination: newValue.destination,
+                plan: false
             };
-        });
+        }
     });
 
-    flightRoute.on('change', function (oldValue, newValue) {
+    flightRoute.on('change', function (newValue, oldValue) {
         async.auto({
             departure: function (cb) {
                 if (_.get(newValue, 'departure', null) == null) return cb(null, false);

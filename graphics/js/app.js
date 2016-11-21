@@ -21,15 +21,18 @@ $(function() {
 	    }, 1000);
 	})();
 
-	flightData.departure.on('change', function(oldValue, newValue) {
+	flightData.departure.on('change', function(newValue, oldValue) {
+		if (!newValue) return;
 		display.route.departure(newValue.city + ', ' + newValue.country);
 	});
 
-	flightData.destination.on('change', function(oldValue, newValue) {
+	flightData.destination.on('change', function(newValue, oldValue) {
+		if (!newValue) return;
 		display.route.destination(newValue.city + ', ' + newValue.country);
 	});
 
-	flightData.plane.on('change', function(oldValue, newValue) {
+	flightData.plane.on('change', function(newValue, oldValue) {
+		if (!newValue) return;
 		display.state.gears(newValue.gears);
 		display.state.autopilot(newValue.autopilot);
 		display.state.speed(newValue.speed);
@@ -37,7 +40,8 @@ $(function() {
 		display.state.map(newValue.position.lat, newValue.position.lon, newValue.heading);
 	});
 
-	flightData.journey.on('change', function(oldValue, newValue) {
+	flightData.journey.on('change', function(newValue, oldValue) {
+		if (!newValue) return;
 		if (!oldValue) {
 			display.route.distance(newValue.distance.remaining);
 			display.route.pct(newValue.pct);
@@ -49,38 +53,29 @@ $(function() {
 		}
 	});
 
-	flightData.time.on('change', function(oldValue, newValue) {
+	flightData.time.on('change', function(newValue, oldValue) {
 		if (toTime(oldValue) != toTime(newValue)) $('#local_time').text(toTime(newValue));
 	});
 
-	flightData.general.on('change', function (oldValue, newValue) {
+	flightData.general.on('change', function (newValue, oldValue) {
+		if (!newValue) return;
 		$('#plane_type').text(newValue.model);
 		$('#plane_id').text(newValue.id);
 		var logo = function (airline) {
-		    switch (airline) {
-		        case 'AIRBUS':
-		            return '<img src="img/airbus.png" alt="" style="height: 35px;">';
-		            break;
-		        case 'BOMBARDIER':
-		            return '<img src="img/bombardier.png" alt="" style="height: 35px;">';
-		            break;
-		        default:
-		            return '<img src="img/' + airline.toLowerCase() + '.png" alt="" style="height: 35px;">';
-		            break;
-		    }
+		    return '<img src="img/' + airline.toLowerCase() + '.png" alt="" style="height: 35px;">';
 		}
 		$('#plane_manufacturer').html(logo(newValue.type));
 	});
 
-	message.on('change', function(oldValue, newValue) {
+	message.on('change', function(newValue, oldValue) {
 	    $('#generalMessage').fadeOut('slow', function () {
-	        if (newValue == '') return;
+	    	if (!newValue) return;
 			$('span', this).text(newValue);
 			$(this).fadeIn();
 		});
 	});
 
-	callsign.on('change', function(oldValue, newValue) {
+	callsign.on('change', function(newValue, oldValue) {
 		$('#flight_id').text(newValue);
 	});
 
@@ -106,6 +101,7 @@ $(function() {
 			    (function () {
 			        if (!flightData.departure.value) return;
 			        if (!flightData.destination.value) return;
+			        if (!flightData.route.value.plan) return;
 
 			        route.push(flightData.departure.value.code);
 			        $.each(flightData.route.value.plan.route.split(" "), function (n, leg) {
